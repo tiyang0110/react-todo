@@ -1,5 +1,33 @@
 import { useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import { Categories, ITodo, todoState } from "../atmos";
+
+const Li = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const LiDiv = styled.div`
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+`;
+
+const LiDivButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+`;
+
+const LiButton = styled.button`
+  border: none;
+  padding: 3px 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  background-color: #d5d5d5;
+`;
 
 function Todo({text, category, id}:ITodo){
   const setTodo = useSetRecoilState(todoState); 
@@ -24,13 +52,17 @@ function Todo({text, category, id}:ITodo){
   }
 
   return (
-    <li>
-      <span>{text}</span>
-      {category !== Categories.TODO && <button name={Categories.TODO} onClick={onClick}>To do</button>}
-      {category !== Categories.DOING && <button name={Categories.DOING} onClick={onClick}>Doing</button>}
-      {category !== Categories.DONE && <button name={Categories.DONE} onClick={onClick}>Done</button>}
-      <button onClick={todoDelete}>❌</button>
-    </li>
+    <LiDiv>
+      <Li>
+        <span>{text}</span>
+        <LiDivButtons>
+          {category !== Categories.TODO && <LiButton name={Categories.TODO} onClick={onClick}>To do</LiButton>}
+          {category !== Categories.DOING && <LiButton name={Categories.DOING} onClick={onClick}>Doing</LiButton>}
+          {category !== Categories.DONE && <LiButton name={Categories.DONE} onClick={onClick}>Done</LiButton>}
+          <LiButton onClick={todoDelete}>❌</LiButton>
+        </LiDivButtons>
+      </Li>
+    </LiDiv>
   );
 }
 
